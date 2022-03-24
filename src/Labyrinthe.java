@@ -25,10 +25,10 @@ class Labyrinthe{
             case (true):
                 c=MUR;//la position est un mur
             case (false):
-                if (personnage.getX==x && personnage.getY==y) {
+                if (personnage.getX()==x && personnage.getY()==y) {
                     c = PJ;
                 }
-                else if (sortie.getX==x && personnage.getY==y){
+                else if (sortie.getX()==x && personnage.getY()==y){
                     c = SORTIE;
                 }else {
                     c = VIDE;
