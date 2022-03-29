@@ -33,11 +33,15 @@ class Labyrinthe {
                 if (personnage.getX == x && personnage.getY == y) {
                     c = PJ;
                 } else if (sortie.getX == x && personnage.getY == y) {
-                    c = SORTIE;
-                } else {
-                    c = VIDE;
+                    if (personnage.getX() == x && personnage.getY() == y) {
+                        c = PJ;
+                    } else if (sortie.getX() == x && personnage.getY() == y) {
+                        c = SORTIE;
+                    } else {
+                        c = VIDE;
+                    }
+                    break;
                 }
-                break;
         }
         return c;
     }
@@ -51,7 +55,7 @@ class Labyrinthe {
      * @param action direction donnée. Par exemple on veut la case à droite de celle à la position x,y (action=droite)
      * @return la position (x,y) de la case voisine dans la direction donnée.
      */
-    static int[] getSuivant(int x, int y, String action) {
+    public static int[] getSuivant(int x, int y, String action) {
         int[] voisine = new int[2];
         switch (action) {
             case (HAUT):
@@ -83,7 +87,7 @@ class Labyrinthe {
      * @throws ActionInconnueException
      */
     void deplacerPerso(String action) throws ActionInconnueException {
-        if (!action.equals(HAUT) && !action.equals(BAS) && !action.equals(DROITE) && !action.equals(GAUCHE)){
+        if (!action.equals(HAUT) && !action.equals(BAS) && !action.equals(DROITE) && !action.equals(GAUCHE)) {
             ActionInconnueException actionInconnueException = new ActionInconnueException();
             throw actionInconnueException;
         }
@@ -101,12 +105,12 @@ class Labyrinthe {
      * @return la chaîne représentant le labyrinthe
      */
     public String toString() {
-        String etatLabyrinthe= "";
-        for (int x=0;x < murs[0].length;x++){
-            for (int y=0; y < murs[1].length; y++){
-                etatLabyrinthe += getChar(x,y);
+        String etatLabyrinthe = "";
+        for (int x = 0; x < murs[0].length; x++) {
+            for (int y = 0; y < murs[1].length; y++) {
+                etatLabyrinthe += getChar(x, y);
             }
-            etatLabyrinthe+="\n";
+            etatLabyrinthe += "\n";
         }
         return etatLabyrinthe;
     }
@@ -115,19 +119,19 @@ class Labyrinthe {
      * Methode etreFini
      * retroune un boolean(true ou false) qui indique si le personnage est sur la sortie ou non.
      *
-     *
      * @return True si le personnage se situe sur la sortie, False sinon
      */
     public boolean etreFini() {
         boolean fin = false;
-        if (personnage.getX==sortie.getX && personnage.getY=sortie.getY){
-            fin=true;
+        if (personnage.getX == sortie.getX && personnage.getY = sortie.getY) {
+            fin = true;
         }
         return fin;
     }
 
     /**
      * METHODE A FAIRE
+     *
      * @param nom
      * @return
      */
