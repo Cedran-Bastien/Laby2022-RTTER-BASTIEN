@@ -1,3 +1,4 @@
+import javax.lang.model.util.ElementScanner6;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,23 +26,19 @@ class Labyrinthe {
      */
     char getChar(int x, int y) {
         char c = ' ';
-        switch (murs[x][y]) {
-            case (true):
-                c = MUR;//la position est un mur
-                break;
-            case (false):
-                if (personnage.getX == x && personnage.getY == y) {
-                    c = PJ;
-                } else if (sortie.getX == x && personnage.getY == y) {
-                    if (personnage.getX() == x && personnage.getY() == y) {
-                        c = PJ;
-                    } else if (sortie.getX() == x && personnage.getY() == y) {
-                        c = SORTIE;
-                    } else {
-                        c = VIDE;
-                    }
-                    break;
-                }
+
+
+        if (murs[x][y]) {
+            //la position est un mur
+            c = MUR;
+        } else {
+            if (personnage.getX() == x && personnage.getY() == y) {
+                c = PJ;
+            } else if (sortie.getX() == x && personnage.getY() == y) {
+                c = SORTIE;
+            } else {
+                c = VIDE;
+            }
         }
         return c;
     }
@@ -92,10 +89,13 @@ class Labyrinthe {
             throw actionInconnueException;
         }
         int[] nouvEmpladement = new int[2];
-        while (getChar(getSuivant(personnage.getX, personnage.getY, action)) != 'X') {
-            nouvEmpladement = getSuivant(personnage.getX, personnage.getY, action);
+        int[] positionsuiv = getSuivant(personnage.getX(), personnage.getY(), action);
+        while (getChar(positionsuiv[0],positionsuiv[1]) != 'X') {
+            nouvEmpladement = positionsuiv;
         }
     }
+
+
 
     /**
      * Methode toString
@@ -122,11 +122,7 @@ class Labyrinthe {
      * @return True si le personnage se situe sur la sortie, False sinon
      */
     public boolean etreFini() {
-        boolean fin = false;
-        if (personnage.getX == sortie.getX && personnage.getY = sortie.getY) {
-            fin = true;
-        }
-        return fin;
+        return (personnage.getX() == sortie.getX() && personnage.getY() == sortie.getY());
     }
 
     /**
@@ -135,7 +131,7 @@ class Labyrinthe {
      * @param nom
      * @return
      */
-    public static Labyrinthe chargerLabyrinthe(String nom) {
+    public static Labyrinthe chargerLabyrinthe(String nom) throws FileNotFoundException {
         FileReader fichierLaby = new FileReader(nom);
         throw new Error();
     }
