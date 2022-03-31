@@ -1,8 +1,8 @@
 import javax.lang.model.util.ElementScanner6;
 import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.desktop.AboutEvent;
+import java.io.*;
+import java.util.PropertyPermission;
 
 
 /**
@@ -16,6 +16,13 @@ class Labyrinthe {
     public static final char MUR = 'X', PJ = 'P', SORTIE = 'S', VIDE = '.';
     public static final String BAS = "bas", HAUT = "haut", GAUCHE = "gauche", DROITE = "droite";
 
+
+
+    public Labyrinthe(boolean[][] mur, Personnage per, Sortie sort){
+        this.murs=mur;
+        this.personnage= per;
+        this.sortie=sort;
+    }
     /**
      * Methode getChar
      * retourne l'objet(mur X, personnage P, sortie S et case vide .) present a la position donner en parametre(x,y)
@@ -131,9 +138,52 @@ class Labyrinthe {
      * @param nom
      * @return
      */
-    public static Labyrinthe chargerLabyrinthe(String nom) throws FileNotFoundException {
+    public static Labyrinthe chargerLabyrinthe(String nom) throws IOException {
         FileReader fichierLaby = new FileReader(nom);
-        throw new Error();
+        BufferedReader bf = new BufferedReader(fichierLaby);
+        int nbligne=0;
+        int nbcolone=0;
+        for (int i= 1; i<3;i++){
+            nbcolone = Integer.parseInt(bf.readLine());
+            if (i==1){
+                nbligne = nbcolone;
+            }
+        }
+        boolean[][] posmurs = new boolean[nbcolone][nbligne];
+        nbligne=0;
+        nbcolone=0;
+        boolean r = true;
+        Personnage pos = null;
+        Sortie s = null;
+        while (r){
+            try {
+                while (true){
+                    int c=fichierLaby.read();
+                    if (MUR==c){
+                        posmurs[nbligne][nbcolone]=true;
+                    }else if (SORTIE==c){
+                        posmurs[nbligne][nbcolone]=false;
+                        s = new Sortie(nbligne,nbcolone);
+                    }
+                    else if (PJ==c){
+                        pos = new Personnage(nbligne,nbcolone);
+                        posmurs[nbligne][nbcolone]=false;
+                    }
+                    nbcolone+=1;
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException a){
+                nbligne+=1;
+            }
+            catch (EOFException eof){
+                r=false;
+            }
+
+        }
+        Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
+        return (labi);
+
+
     }
 
 }
