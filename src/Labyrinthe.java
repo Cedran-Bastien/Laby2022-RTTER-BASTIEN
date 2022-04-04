@@ -140,25 +140,30 @@ class Labyrinthe {
      */
     public static Labyrinthe chargerLabyrinthe(String nom) throws IOException {
         FileReader fichierLaby = new FileReader(nom);
+        FileReader fichierLaby2 = new FileReader(nom);
         BufferedReader bf = new BufferedReader(fichierLaby);
         int nbligne=0;
         int nbcolone=0;
+        int c=0;
         for (int i= 1; i<3;i++){
             nbcolone = Integer.parseInt(bf.readLine());
+            c=fichierLaby2.read();
             if (i==1){
                 nbligne = nbcolone;
             }
         }
+        bf.close();
         boolean[][] posmurs = new boolean[nbcolone][nbligne];
         nbligne=0;
         nbcolone=0;
         boolean r = true;
+        boolean boucle2 = true;
         Personnage pos = null;
         Sortie s = null;
         while (r){
             try {
-                while (true){
-                    int c=fichierLaby.read();
+                while (boucle2){
+                    c=fichierLaby2.read();
                     if (MUR==c){
                         posmurs[nbligne][nbcolone]=true;
                     }else if (SORTIE==c){
@@ -177,10 +182,12 @@ class Labyrinthe {
             }
             catch (EOFException eof){
                 r=false;
+                boucle2=false;
             }
 
         }
         Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
+        fichierLaby.close();
         return (labi);
 
 
