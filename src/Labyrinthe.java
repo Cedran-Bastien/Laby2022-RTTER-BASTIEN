@@ -181,7 +181,7 @@ class Labyrinthe {
                     posmurs[i][j]=false;
                 }
             }
-            c=fichierLaby.read();
+            c=fichierLaby2.read();
         }
         /**
         while (r){
