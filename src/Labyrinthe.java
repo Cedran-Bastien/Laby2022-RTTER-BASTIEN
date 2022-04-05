@@ -140,15 +140,14 @@ class Labyrinthe {
      */
     public static Labyrinthe chargerLabyrinthe(String nom) throws IOException {
         FileReader fichierLaby = new FileReader(nom);
-        FileReader fichierLaby2 = new FileReader(nom);
         BufferedReader bf = new BufferedReader(fichierLaby);
         int nbligne=0;
         int nbcolone=0;
         int c=0;
-        for (int i= 1; i<3;i++){
+        for (int i= 0; i<2;i++){
             nbcolone = Integer.parseInt(bf.readLine());
             //c n'est pas utiliser ?! Réponse si mais il compte les sauts de lignes
-            if (i==1){
+            if (i==0){
                 nbligne = nbcolone;
             }
         }
@@ -162,14 +161,15 @@ class Labyrinthe {
         Sortie s = null;
         //On connait déjà le nombre de ligne et de colonne du labyrinthe. Il suffit de faire une
         // boucle for ( int i = 0 ; i < nblignes2 ; i++ ) puis une deuxième boucle
+
         // for (int j = 0 ; j < nbcolonnes2 ; j++ ) mettre les if dedans
-        for (int f = 0 ; f < 4 ; f++){
-            c=fichierLaby2.read();
-        }
+        // (int f = 0 ; f < 4 ; f++){
+         //   c=fichierLaby2.read();
+        //}
         for (int i = 0; i < nbligne ; i++){
             for (int j = 0 ; j < nbcolone ; j++){
                 //le fichier ne lit pas les bonnes lignes il faut que c soit à la bonne place avant de lire caractère par caractère
-                c=fichierLaby2.read();
+                c=fichierLaby.read();
                 if (MUR==c){
                     posmurs[i][j]=true;
                 }else if (SORTIE==c){
@@ -181,7 +181,7 @@ class Labyrinthe {
                     posmurs[i][j]=false;
                 }
             }
-            c=fichierLaby2.read();
+            c=fichierLaby.read();
         }
         /**
         while (r){
