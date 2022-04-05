@@ -21,7 +21,7 @@ public class MainLaby {
         String action = sc.next();
         while (action != "exit") {
             boolean actionexistante = false;
-            while (!actionexistante) {
+            while (actionexistante) {
                 try {
                     laby.deplacerPerso(action);
                     actionexistante = true;
