@@ -147,8 +147,7 @@ class Labyrinthe {
         int c=0;
         for (int i= 1; i<3;i++){
             nbcolone = Integer.parseInt(bf.readLine());
-            //c n'est pas utiliser ?!
-            c=fichierLaby2.read();
+            //c n'est pas utiliser ?! Réponse si mais il compte les sauts de lignes
             if (i==1){
                 nbligne = nbcolone;
             }
@@ -164,6 +163,9 @@ class Labyrinthe {
         //On connait déjà le nombre de ligne et de colonne du labyrinthe. Il suffit de faire une
         // boucle for ( int i = 0 ; i < nblignes2 ; i++ ) puis une deuxième boucle
         // for (int j = 0 ; j < nbcolonnes2 ; j++ ) mettre les if dedans
+        for (int f = 0 ; f < 4 ; f++){
+            c=fichierLaby2.read();
+        }
         for (int i = 0; i < nbligne ; i++){
             for (int j = 0 ; j < nbcolone ; j++){
                 //le fichier ne lit pas les bonnes lignes il faut que c soit à la bonne place avant de lire caractère par caractère
@@ -179,6 +181,7 @@ class Labyrinthe {
                     posmurs[i][j]=false;
                 }
             }
+            c=fichierLaby2.read();
         }
         /**
         while (r){
