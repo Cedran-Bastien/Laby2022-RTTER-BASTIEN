@@ -17,19 +17,22 @@ public class MainLaby {
             }
         }
         System.out.println(laby);
-        System.out.println("veuillez entrer l'action voulu du personnage en respectant les majuscules (\"HAUT\",\"BAS\",\"DROITE\" ou \"GAUCHE\") :");
+        System.out.println("veuillez entrer l'action voulu du personnage en respectant les minuscules (\"haut\",\"bas\",\"droite\" ou \"gauche\") :");
         String action = sc.next();
-        while (action != "exit") {
+        while (!action.equals("exit") && !laby.etreFini()) {
             boolean actionexistante = false;
-            while (actionexistante) {
+            while (!actionexistante) {
                 try {
                     laby.deplacerPerso(action);
                     actionexistante = true;
                 } catch (ActionInconnueException a) {
                     a.printStackTrace();
-                    System.out.println("veuillez entrer une action valide, existante, en respectant les majuscules (\"HAUT\",\"BAS\",\"DROITE\" ou \"GAUCHE\") :");
+                    System.out.println("veuillez entrer une action valide, existante, en respectant les minuscules (\"haut\",\"bas\",\"droite\" ou \"gauche\") :");
                     action = sc.next();
                 }
+                boolean o = !action.equals("exit") && !laby.etreFini();
+                boolean labyeee=!laby.etreFini();
+                boolean exit = !action.equals("exit");
             }
             System.out.println(laby);
             try {
@@ -39,8 +42,14 @@ public class MainLaby {
                 System.out.println("veuillez entrer l'action voulu du personnage en respectant les majuscules (\"HAUT\",\"BAS\",\"DROITE\" ou \"GAUCHE\") :");
                 action = sc.next();
             }
-
-
+            if (!action.equals("exit") && !laby.etreFini()){
+                System.out.println("veuillez entrer une action valide, existante, en respectant les minuscules (\"haut\",\"bas\",\"droite\" ou \"gauche\") :");
+                action = sc.next();
+            }else if (action.equals("exit")){
+                System.out.println("jeu arrété par le joueur");
+            }else if (laby.etreFini()){
+                System.out.println("BRAVO! VOUS AVEZ FINI LE LABYRINTHE");
+            }
         }
     }
 }

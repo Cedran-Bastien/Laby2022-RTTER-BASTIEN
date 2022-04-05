@@ -41,7 +41,7 @@ class Labyrinthe {
         } else {
             if (personnage.getX() == x && personnage.getY() == y) {
                 c = PJ;
-            } else if (sortie.getX() == x && personnage.getY() == y) {
+            } else if (sortie.getX() == x && sortie.getY() == y) {
                 c = SORTIE;
             } else {
                 c = VIDE;
@@ -90,15 +90,17 @@ class Labyrinthe {
      * @param action choix de la direction vers laquelle se déplacer
      * @throws ActionInconnueException
      */
-    void deplacerPerso(String action) throws ActionInconnueException {
+    public void  deplacerPerso(String action) throws ActionInconnueException {
         if (!action.equals(HAUT) && !action.equals(BAS) && !action.equals(DROITE) && !action.equals(GAUCHE)) {
             ActionInconnueException actionInconnueException = new ActionInconnueException();
             throw actionInconnueException;
         }
-        int[] nouvEmpladement = new int[2];
-        int[] positionsuiv = getSuivant(personnage.getX(), personnage.getY(), action);
-        while (getChar(positionsuiv[0],positionsuiv[1]) != 'X') {
-            nouvEmpladement = positionsuiv;
+        int[] coor = new int[2];
+        coor=getSuivant(personnage.getX(), personnage.getY(), action);
+        while (getChar(coor[0], coor[1]) != 'X') {
+            personnage.setX(coor[0]);
+            personnage.setY(coor[1]);
+            coor=getSuivant(personnage.getX(), personnage.getY(), action);
         }
     }
 
@@ -140,36 +142,26 @@ class Labyrinthe {
      */
     public static Labyrinthe chargerLabyrinthe(String nom) throws IOException {
         FileReader fichierLaby = new FileReader(nom);
+        FileReader fichierLaby2 = new FileReader(nom);
         BufferedReader bf = new BufferedReader(fichierLaby);
         int nbligne=0;
         int nbcolone=0;
         int c=0;
-        for (int i= 0; i<2;i++){
+        for (int i= 0; i<2;i++) {
             nbcolone = Integer.parseInt(bf.readLine());
-            //c n'est pas utiliser ?! Réponse si mais il compte les sauts de lignes
-            if (i==0){
+            if (i == 0) {
                 nbligne = nbcolone;
             }
         }
-        bf.close();
         boolean[][] posmurs = new boolean[nbligne][nbcolone];
-        //nbligne=0;
-        //nbcolone=0;
-        //boolean r = true;
-        //boolean boucle2 = true;
         Personnage pos = null;
         Sortie s = null;
-        //On connait déjà le nombre de ligne et de colonne du labyrinthe. Il suffit de faire une
-        // boucle for ( int i = 0 ; i < nblignes2 ; i++ ) puis une deuxième boucle
-
-        // for (int j = 0 ; j < nbcolonnes2 ; j++ ) mettre les if dedans
-        // (int f = 0 ; f < 4 ; f++){
-         //   c=fichierLaby2.read();
-        //}
+        while   (c!='X'){
+            c=fichierLaby2.read();
+        }
         for (int i = 0; i < nbligne ; i++){
             for (int j = 0 ; j < nbcolone ; j++){
                 //le fichier ne lit pas les bonnes lignes il faut que c soit à la bonne place avant de lire caractère par caractère
-                c=fichierLaby.read();
                 if (MUR==c){
                     posmurs[i][j]=true;
                 }else if (SORTIE==c){
@@ -180,38 +172,13 @@ class Labyrinthe {
                     pos = new Personnage(i,j);
                     posmurs[i][j]=false;
                 }
+                c=fichierLaby2.read();
             }
-            c=fichierLaby.read();
+            c=fichierLaby2.read();
         }
-        /**
-        while (r){
-            try {
-                while (boucle2){
-                    c=fichierLaby2.read();
-                    if (MUR==c){
-                        posmurs[nbligne][nbcolone]=true;
-                    }else if (SORTIE==c){
-                        posmurs[nbligne][nbcolone]=false;
-                        s = new Sortie(nbligne,nbcolone);
-                    }
-                    else if (PJ==c){
-                        pos = new Personnage(nbligne,nbcolone);
-                        posmurs[nbligne][nbcolone]=false;
-                    }
-                    nbcolone+=1;
-                }
-            }
-            catch (ArrayIndexOutOfBoundsException a){
-                nbligne+=1;
-            }
-            catch (EOFException eof){
-                r=false;
-                boucle2=false;
-            }
-
-        }**/
         Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
         fichierLaby.close();
+        bf.close();
         return (labi);
 
 
