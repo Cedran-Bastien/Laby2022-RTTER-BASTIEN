@@ -147,19 +147,40 @@ class Labyrinthe {
         int c=0;
         for (int i= 1; i<3;i++){
             nbcolone = Integer.parseInt(bf.readLine());
+            //c n'est pas utiliser ?!
             c=fichierLaby2.read();
             if (i==1){
                 nbligne = nbcolone;
             }
         }
         bf.close();
-        boolean[][] posmurs = new boolean[nbcolone][nbligne];
-        nbligne=0;
-        nbcolone=0;
-        boolean r = true;
-        boolean boucle2 = true;
+        boolean[][] posmurs = new boolean[nbligne][nbcolone];
+        //nbligne=0;
+        //nbcolone=0;
+        //boolean r = true;
+        //boolean boucle2 = true;
         Personnage pos = null;
         Sortie s = null;
+        //On connait déjà le nombre de ligne et de colonne du labyrinthe. Il suffit de faire une
+        // boucle for ( int i = 0 ; i < nblignes2 ; i++ ) puis une deuxième boucle
+        // for (int j = 0 ; j < nbcolonnes2 ; j++ ) mettre les if dedans
+        for (int i = 0; i < nbligne ; i++){
+            for (int j = 0 ; j < nbcolone ; j++){
+                //le fichier ne lit pas les bonnes lignes il faut que c soit à la bonne place avant de lire caractère par caractère
+                c=fichierLaby2.read();
+                if (MUR==c){
+                    posmurs[i][j]=true;
+                }else if (SORTIE==c){
+                    posmurs[i][j]=false;
+                    s = new Sortie(i,j);
+                }
+                else if (PJ==c){
+                    pos = new Personnage(i,j);
+                    posmurs[i][j]=false;
+                }
+            }
+        }
+        /**
         while (r){
             try {
                 while (boucle2){
@@ -185,7 +206,7 @@ class Labyrinthe {
                 boucle2=false;
             }
 
-        }
+        }**/
         Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
         fichierLaby.close();
         return (labi);
