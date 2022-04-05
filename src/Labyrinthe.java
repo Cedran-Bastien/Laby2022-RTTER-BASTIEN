@@ -113,7 +113,7 @@ class Labyrinthe {
      */
     public String toString() {
         String etatLabyrinthe = "";
-        for (int x = 0; x < murs[0].length; x++) {
+        for (int x = 0; x < murs.length; x++) {
             for (int y = 0; y < murs[1].length; y++) {
                 etatLabyrinthe += getChar(x, y);
             }
