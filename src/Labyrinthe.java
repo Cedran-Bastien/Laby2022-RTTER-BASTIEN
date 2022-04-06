@@ -140,7 +140,8 @@ class Labyrinthe {
      * @param nom
      * @return
      */
-    public static Labyrinthe chargerLabyrinthe(String nom) throws IOException {
+    public static Labyrinthe chargerLabyrinthe(String nom) throws IOException, FichierIncorrectException {
+        FichierIncorrectException f = new FichierIncorrectException();
         FileReader fichierLaby = new FileReader(nom);
         FileReader fichierLaby2 = new FileReader(nom);
         BufferedReader bf = new BufferedReader(fichierLaby);
@@ -159,22 +160,28 @@ class Labyrinthe {
         while   (c!='X'){
             c=fichierLaby2.read();
         }
+        int cptS=0;
+        int cptP=0;
         for (int i = 0; i < nbligne ; i++){
             for (int j = 0 ; j < nbcolone ; j++){
-                //le fichier ne lit pas les bonnes lignes il faut que c soit à la bonne place avant de lire caractère par caractère
                 if (MUR==c){
                     posmurs[i][j]=true;
                 }else if (SORTIE==c){
                     posmurs[i][j]=false;
                     s = new Sortie(i,j);
+                    cptS++;
                 }
                 else if (PJ==c){
                     pos = new Personnage(i,j);
                     posmurs[i][j]=false;
+                    cptP++;
                 }
                 c=fichierLaby2.read();
             }
             c=fichierLaby2.read();
+        }
+        if (s==null || pos==null ||cptS>2||cptS>2){
+            throw f;
         }
         Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
         fichierLaby.close();
@@ -184,4 +191,15 @@ class Labyrinthe {
 
     }
 
+    public boolean[][] getMurs() {
+        return murs;
+    }
+
+    public Personnage getPersonnage() {
+        return personnage;
+    }
+
+    public Sortie getSortie() {
+        return sortie;
+    }
 }
