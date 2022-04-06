@@ -77,6 +77,9 @@ public class TestLabyEtudiant {
         );
     }
 
+    /**
+     * test de lever d'exception quand le fichier contient deux joueurs
+     */
     @Test
     public void test_charger_laby_deuxJoueurs(){
         // verifie leve une FichierInccorectException
@@ -86,6 +89,9 @@ public class TestLabyEtudiant {
         );
     }
 
+    /**
+     * test de lever d'exception quand le fichier ne contient pas de joueur
+     */
     @Test
     public void test_charger_laby_pasJoueur(){
         // verifie leve une FichierInccorectException
