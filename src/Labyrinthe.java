@@ -180,7 +180,7 @@ class Labyrinthe {
             }
             c=fichierLaby2.read();
         }
-        if (s==null || pos==null ||cptS>2||cptS>2){
+        if (s==null || pos==null ||cptS>1||cptP>1){
             throw f;
         }
         Labyrinthe labi =new Labyrinthe(posmurs,pos, s);
